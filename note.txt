@@ -1,1 +1,26 @@
+yarn add @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+yarn add -D @types/passport-jwt
+
+npm install @nestjs/passport @nestjs/jwt passport passport-jwt
+npm install --save-dev @types/passport-jwt
+npm install @nestjs/config
+
 nest g resourcce
+"prisma": {
+  "seed": "ts-node prisma/seed.ts"
+}
+
+yarn add -D ts-node
+npx prisma studio
+
+step-0: prisma reset
+npx prisma migrate reset
+
+Step 1: Delete migration files manually
+
+rm -rf prisma/migrations
+
+Step 2: Recreate a baseline migration
+
+npx prisma migrate dev --name init
+npx prisma migrate dev --name make_tag_content_unique

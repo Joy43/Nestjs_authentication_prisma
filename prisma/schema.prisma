@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,6 +11,11 @@ enum Role {
   USER
   ADMIN
   SUPERADMIN
+}
+
+enum Availability {
+  IN_STORE
+  ONLINE
 }
 
 model User {
@@ -41,43 +40,32 @@ model Profile {
 }
 
 model Review {
-  id        String  @id @default(uuid()) @db.Uuid
-  title     String
-  content   String
-  rating    Int
+  id      String @id @default(uuid()) @db.Uuid
+  title   String
+  content String
+  rating  Int
+
   product   Product @relation(fields: [productId], references: [id])
-  productId Int
+  productId String  @db.Uuid
 
   user   User?   @relation(fields: [userId], references: [id])
   userId String? @db.Uuid
 }
 
-model Product {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  createdAt   DateTime     @default(now())
-  price       Float
-  sale        Boolean      @default(false)
-  avilibility Availibility
-  reviews     Review[]
-  tags        Tag[]
-  description Description?
-}
-
-model Description {
-  id        Int     @id @default(autoincrement())
-  content   String
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int     @unique
-}
-
 model Tag {
   id       Int       @id @default(autoincrement())
-  content  String
-  products Product[]
+  content  String    @unique
+  products Product[] @relation("ProductTags")
 }
 
-enum Availibility {
-  IN_STORE
-  ONLINE
+model Product {
+  id           String       @id @default(uuid()) @db.Uuid
+  name         String       @unique
+  createdAt    DateTime     @default(now())
+  price        Float
+  sale         Boolean      @default(false)
+  availability Availability
+  description  String
+  reviews      Review[]
+  tags         Tag[]        @relation("ProductTags")
 }

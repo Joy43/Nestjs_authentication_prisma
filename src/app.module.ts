@@ -7,12 +7,21 @@ import { ProductsModule } from './products/products.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma/prisma.service';
-import { CommonService } from './common/common.service';
+
+import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 
 @Module({
-  imports: [ DatabaseModule, ProductsModule, UsersModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+  
+    DatabaseModule, ProductsModule, UsersModule, AuthModule, PrismaModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService, CommonService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
