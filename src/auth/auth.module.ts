@@ -7,6 +7,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
+import { MailModule } from 'src/mail/mail.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { JwtStrategy } from './jwt.strategy';
     }),
     DatabaseModule,
     PrismaModule,
+    MailModule
   ],
   providers: [AuthService, JwtStrategy, PrismaService],
   controllers: [AuthController],

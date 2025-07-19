@@ -10,6 +10,8 @@ import { PrismaService } from './prisma/prisma.service';
 
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { MailService } from './mail/mail.service';
+import { MailModule } from './mail/mail.module';
 import configuration from './config/configuration';
 
 
@@ -20,8 +22,8 @@ import configuration from './config/configuration';
       load: [configuration],
     }),
   
-    DatabaseModule, ProductsModule, UsersModule, AuthModule, PrismaModule],
+    DatabaseModule, ProductsModule, UsersModule, AuthModule, PrismaModule, MailModule],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, MailService],
 })
 export class AppModule {}
